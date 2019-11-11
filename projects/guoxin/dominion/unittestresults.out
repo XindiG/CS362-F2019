@@ -1,0 +1,122 @@
+-------------unit test1-------------
+
+PASSED: current hand count increase
+
+FAILED: deck count decrease
+
+PASSED: victory cards unchanged
+
+PASSED: kingdom cards unchanged
+
+PASSED: other player's handCount unchanged
+
+PASSED: other player's deck unchanged
+
+PASSED: other player's discard count unchanged
+
+
+
+File 'unittest1.c'
+Lines executed:79.31% of 58
+Creating 'unittest1.c.gcov'
+
+
+-------------unit test2--------------
+
+PASSED: current hand count increased by 2
+
+FAILED: current hand treasure differs from expected
+
+PASSED: deck count decrease
+
+PASSED: victory cards unchanged
+
+PASSED: kingdom cards unchanged
+
+PASSED: other player's handCount unchanged
+
+PASSED: other player's deck unchanged
+
+PASSED: other player's discard count unchanged
+
+
+
+File 'unittest2.c'
+Lines executed:78.13% of 64
+Creating 'unittest2.c.gcov'
+
+
+
+-------------unit test3--------------
+
+PASSED: one card drawn to hand 
+
+PASSED: deck count decreased by 1
+
+PASSED: number of actions increased by 1
+
+PASSED: victory cards unchanged
+
+PASSED: kingdom cards unchanged
+
+PASSED: other player's handCount unchanged
+
+PASSED: other player's deck unchanged
+
+PASSED: other player's discard count unchanged
+
+
+
+File 'unittest3.c'
+Lines executed:77.78% of 63
+Creating 'unittest3.c.gcov'
+
+
+-------------unit test4--------------
+
+PASSED: one card drawn to hand 
+
+PASSED: deck count decreased by 1
+
+PASSED: number of actions increased by 1
+
+PASSED: victory cards unchanged
+
+PASSED: kingdom cards unchanged
+
+PASSED: other player's handCount unchanged
+
+PASSED: other player's deck unchanged
+
+PASSED: other player's discard count unchanged
+
+
+
+File 'unittest4.c'
+Lines executed:77.78% of 63
+Creating 'unittest4.c.gcov'
+
+
+
+-------------unit test5--------------
+
+
+
+PASSED: current hand count increased by 3 
+
+PASSED: deck count decreased by 4
+
+PASSED: number of abuys increased by 1
+
+PASSED: other player's handCount increased by 1
+
+PASSED: other player's deck decreased by 1
+
+PASSED: other player's discard count unchanged
+
+File 'unittest5.c'
+Lines executed:77.78% of 45
+Creating 'unittest5.c.gcov'
+
+
+
