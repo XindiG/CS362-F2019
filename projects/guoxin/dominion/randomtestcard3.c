@@ -1,119 +1,66 @@
 #include "dominion.h"
-#include "rngs.h"
+#include "dominion_helpers.h"
+#include <string.h>
 #include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
 #include <assert.h>
+#include "rngs.h"
+#include <stdlib.h>
+#include<time.h>
 
-#define MAX_TESTS 1300
+int main() 
+{
+	srand(time(NULL));
+	
+    int a;
+    int seed = 1000;
+    int handpos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+    //int numPlayers = 2;
+    int player=0;
+	struct gameState state, test;
+	int k[10] = {adventurer, embargo, village, minion, mine, cutpurse,
+			sea_hag, tribute, smithy, council_room};
 
-//This randomly tests tribute
+	for(a = 0; a < 10000; a++)
+	{
+		int numPlayers = (rand() % 50);
+		//int seed = (rand() % 100);
+	
+		// initialize a game state and player cards
+		initializeGame(numPlayers, k, seed, &state);
 
-int main() {
-    
-	  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, 
-	       sea_hag, tribute, smithy};
-    int *reveals = malloc(10 * sizeof(int));
-    int rand = rand() % 10;
-    for(i = 0; i<10; i++){
-      reveals[i] = k[rand];
-    }
+		printf("\n----------Testing tribute Card Pass %d/10000----------\n", a+1);
 
-	  int i, j, n, players, player, handCount, deckCount, seed, address;
-	  //struct gameState state;
-	  struct gameState state;
-	  struct gameState stat;
-	  struct gameState sta;
-    
+		// copy the game state to a test case
+		//state.handCount[player]++;
 
-	  printf("Running Random Card Test for tribute\n");
+		memcpy(&test, &state, sizeof(struct gameState));
 
-	  for (i = 0; i < MAX_TESTS; i++) {
+    cardEffect(tribute, choice1, choice2, choice3, &state, handpos, &bonus);
+		player = whoseTurn(&test);
+		//Check players hand
+		if(state.hand[player][test.handCount[player]-1] != -1)
+			printf("Passed where tribute card was added to the players hand\n");
+		else
+			printf("Failed where tribute card was not added to the players hand\n");
 
-		  
-		 players = rand() % 4;
-		 seed = rand();		//pick random seed
+		if(test.playedCardCount+1 == state.playedCardCount)
+			printf("Passed where player played tribute card\n");
+		else
+			printf("Failed where player did not play tribute card\n");
+			
+		//Discard Test: Check if card was discarded
+		if(test.discardCount[player] == state.discardCount[player])
+			printf("Passed where the tribute was discarded\n");	
+		else	
+		{
+			printf("Failed where the tribute was not discarded.\n");
+		}
 		
-		 initializeGame(players, k, seed, &state);	//initialize Gamestate
-
-		  //Initiate valid state variables
-		  state.deckCount[player] = rand() % MAX_DECK; //Pick random deck size out of MAX DECK size
-		  state.discardCount[player] = rand() % MAX_DECK;
-		  state.handCount[player] = rand() % MAX_HAND;
-
-
-		  //Copy state variables
-		  handCount = state.handCount[player];
-		  deckCount = state.deckCount[player];
-
-		  		  	  		  		  printf("%d\n", i);
-
-
-		  tribute_effect(&state, 1, 2, reveals);		//Run card
-
-		  printf("%dB\n", i);
-	  }
-
-
-	   for (i = 0; i < MAX_TESTS; i++) {
-
-		   
-	  printf("PRE2\n");
-
-	  initializeGame(players, k, seed, &stat);	//initialize Gamestate
-
-	printf("POST\n");
-		
-		  //Initiate valid state variables
-		  stat.deckCount[player] = rand() % MAX_DECK; //Pick random deck size out of MAX DECK size
-		  stat.discardCount[player] = rand() % MAX_DECK;
-		  stat.handCount[player] = rand() % MAX_HAND;
-
-
-		  //Copy state variables
-		  handCount = stat.handCount[player];
-		  deckCount = stat.deckCount[player];
-
-   		  printf("%d\n", i);
-
-
-		  tribute_effect(&stat, 1, 2, reveals);		//Run card
-
-		  		  printf("%dB\n", i);
-
-	  }
-
-
-	   for (i = 0; i < MAX_TESTS; i++) {
-
-
-		   	   	  printf("PRE2\n");
-
-
- 	  initializeGame(players, k, seed, &sta);	//initialize Gamestate
-
-	  	printf("POST2\n");
-
-		  //Initiate valid state variables
-		  sta.deckCount[player] = rand() % MAX_DECK; //Pick random deck size out of MAX DECK size
-		  sta.discardCount[player] = rand() % MAX_DECK;
-		  sta.handCount[player] = rand() % MAX_HAND;
-
-
-		  //Copy state variables
-		  handCount = sta.handCount[player];
-		  deckCount = sta.deckCount[player];
-
-		  printf("%d\n", i);
-
-		  tribute_effect(&sta, 1, 2, reveals);		//Run card
-
-		 printf("%dB\n", i);
-
-	  }
-
-
-	  printf("Tests Complete\n");
-
-	  return 0;
+		//Action Test: Check if the +1 Action was added
+		if(test.numActions+1 == state.numActions)
+			printf("Passed where an extra action was added\n");
+		else
+			printf("Failed where an extra action was not added\n");
+	}
+	printf("----------End Testing Card----------\n");
 }
